@@ -1,0 +1,23 @@
+{
+    "name": "lighningbotphp",
+    "description": "PHP base for lightning bot game.",
+    "keywords": ["ligthningbot", "game"],
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "vlucas/phpdotenv": "^2.4",
+        "guzzlehttp/guzzle": "~6.0",
+        "monolog/monolog": "^1.25",
+        "php-di/php-di": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Src\\": "src/"
+        }
+    },
+    "scripts": {
+        "post-root-package-install": [
+            "php -r \"file_exists('.env') || copy('.env-sample', '.env');\""
+        ]
+    }
+}
