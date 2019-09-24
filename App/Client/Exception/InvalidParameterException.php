@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Client\Exceptions;
+namespace App\Client\Exception;
 
 /**
  * Class InvalidRequestParameter
