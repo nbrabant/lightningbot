@@ -2,35 +2,21 @@
 
 namespace App\Client\Response;
 
+use App\Client\Response\Model\Position;
+
 /**
  * Class InfoResponse
  *
- * @package App\Client\Response
- */
-/**
+ * Parsing infos response :
  * {
  *  "success": true,
  *  "name": "Prize Turk",
  *  "dimensions": 15,
- *  "positions": [
- *  {
- *      "pseudo": "a",
- *      "x": 2,
- *      "y": 2
- *  },
- *  {
- *      "pseudo": "b",
- *      "x": 7,
- *      "y": 7
- *  },
- *  {
- *      "pseudo": "c",
- *      "x": 12,
- *      "y": 12
- *  }
- *  ],
+ *  "positions": [{"pseudo": "a", "x": 2, "y": 2}, {"pseudo": "b", "x": 7, "y": 7}, {"pseudo": "c", "x": 12, "y": 12}],
  *  "wait": 9340
  * }
+ *
+ * @package App\Client\Response
  */
 class InfoResponse extends AbstractResponse
 {
@@ -92,6 +78,8 @@ class InfoResponse extends AbstractResponse
      */
     public function setPositions(array $positions): void
     {
-        $this->positions = $positions;
+        foreach ($positions as $position) {
+            $this->positions[] = new Position($position['pseudo'], $position['x'], $position['y']);
+        }
     }
 }

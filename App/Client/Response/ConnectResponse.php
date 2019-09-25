@@ -5,14 +5,14 @@ namespace App\Client\Response;
 /**
  * Class ConnectResponse
  *
- * @package App\Client\Response
- */
-/**
+ * Parsing connection response :
  * {
  *  "success": true,
  *  "pseudo": "yourPseudo",
  *  "wait": 84165
  * }
+ *
+ * @package App\Client\Response
  */
 class ConnectResponse extends AbstractResponse
 {

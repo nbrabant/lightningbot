@@ -20,6 +20,19 @@ class AbstractResponse
     protected $wait;
 
     /**
+     * Forge request object from request body
+     *
+     * @param array $responseBody
+     *
+     * @return \App\Client\Response\AbstractResponse
+     */
+    public static function forge(array $responseBody)
+    {
+        $instance = new self();
+        return $instance->parseResponse($responseBody);
+    }
+
+    /**
      * @return bool
      */
     public function isSuccess(): bool
@@ -49,5 +62,25 @@ class AbstractResponse
     public function getWait(): int
     {
         return $this->wait;
+    }
+
+    /**
+     * Parse response to the herited request object
+     *
+     * @param array $responseBody
+     *
+     * @return \App\Client\Response\AbstractResponse
+     */
+    private function parseResponse(array $responseBody)
+    {
+        $properties = get_object_vars($this);
+
+        foreach ($properties as $property) {
+            if (isset($responseBody[$property])) {
+                $this->{'set' . ucfirst($property)}($responseBody[$property]);
+            }
+        }
+
+        return $this;
     }
 }

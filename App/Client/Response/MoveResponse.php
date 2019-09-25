@@ -5,13 +5,13 @@ namespace App\Client\Response;
 /**
  * Class MoveResponse
  *
- * @package App\Client\Response
- */
-/**
+ * Parsing move response :
  * {
  *  "success": true,
  *  "wait": 131
  * }
+ *
+ * @package App\Client\Response
  */
 class MoveResponse extends AbstractResponse
 {

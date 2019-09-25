@@ -5,14 +5,14 @@ namespace App\Client\Response;
 /**
  * Class ConnectTestResponse
  *
- * @package App\Client\Response
- */
-/**
+ * Parsing connection test response :
  * {
  *  "success": true,
  *  "token": "2db46fa90d9ac50f7d87",
  *  "wait": 84165
  * }
+ *
+ * @package App\Client\Response
  */
 class ConnectTestResponse extends AbstractResponse
 {

@@ -2,30 +2,19 @@
 
 namespace App\Client\Response;
 
+use App\Client\Response\Model\Direction;
+
 /**
  * Class DirectionsResponse
  *
- * @package App\Client\Response
- */
-/**
+ * Parsing directions response :
  * {
  *  "success": true,
- *  "directions": [
- *  {
- *      "pseudo": "a",
- *      "direction": 1
- *  },
- *  {
- *      "pseudo": "b",
- *      "direction": 3
- *  },
- *  {
- *      "pseudo": "c",
- *      "direction": 2
- *  }
- *  ],
+ *  "directions": [{"pseudo": "a", "direction": 1}, {"pseudo": "b", "direction": 3}, {"pseudo": "c", "direction": 2}],
  *  "wait": 9910
  * }
+ *
+ * @package App\Client\Response
  */
 class DirectionsResponse extends AbstractResponse
 {
@@ -47,6 +36,8 @@ class DirectionsResponse extends AbstractResponse
      */
     public function setDirections(array $directions): void
     {
-        $this->directions = $directions;
+        foreach ($directions as $direction) {
+            $this->directions[] = new Direction($direction['pseudo'], $direction['direction']);
+        }
     }
 }

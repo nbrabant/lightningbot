@@ -2,6 +2,11 @@
 
 namespace App\Client;
 
+use App\Client\Response\ConnectResponse;
+use App\Client\Response\ConnectTestResponse;
+use App\Client\Response\DirectionsResponse;
+use App\Client\Response\InfoResponse;
+use App\Client\Response\MoveResponse;
 use \GuzzleHttp\Client;
 
 /**
@@ -41,43 +46,53 @@ class LightningbotClient
         $this->uriBaseTest = getenv(self::API_TEST_URL);
     }
 
+    /**
+     * @return \App\Client\Response\AbstractResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function connect()
     {
-        $response =  $this->call($this->uriBase, ['token']);
-
-
-    }
-
-    public function connectTest()
-    {
-        $response =  $this->call($this->uriBaseTest, ['pseudo']);
-
-
-    }
-
-    public function info()
-    {
-        $this->call($this->uriBase, ['token']);
-
-
-    }
-
-    public function directions()
-    {
-        $this->call($this->uriBase, ['token', 'turn']);
-
-
-    }
-
-    public function move()
-    {
-        $this->call($this->uriBase, ['token', 'direction', 'turn']);
-
-
+        return ConnectResponse::forge($this->call($this->uriBase, ['token']));
     }
 
     /**
-     *
+     * @return \App\Client\Response\AbstractResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function connectTest()
+    {
+        return ConnectTestResponse::forge($this->call($this->uriBaseTest, ['pseudo']));
+    }
+
+    /**
+     * @return \App\Client\Response\AbstractResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function info()
+    {
+        return InfoResponse::forge($this->call($this->uriBase, ['token']));
+    }
+
+    /**
+     * @return \App\Client\Response\AbstractResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function directions()
+    {
+        return DirectionsResponse::forge($this->call($this->uriBase, ['token', 'turn']));
+    }
+
+    /**
+     * @return \App\Client\Response\AbstractResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function move()
+    {
+        return MoveResponse::forge($this->call($this->uriBase, ['token', 'direction', 'turn']));
+    }
+
+    /**
+     * Call client REST API
      *
      * @param $url
      * @param array|null $options
