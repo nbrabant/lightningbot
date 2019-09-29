@@ -2,11 +2,11 @@
 
 namespace App\Game\Bot;
 
+use Psr\Log\LoggerInterface;
+use App\Game\Game;
 use App\Client\LightningbotClient;
 use App\Client\Response\DirectionsResponse;
 use App\Client\Response\InfoResponse;
-use App\Game\Game;
-use Monolog\Logger;
 
 /**
  * Class AbstractBot
@@ -30,7 +30,7 @@ abstract class AbstractBot
      */
     private $gameClient;
     /**
-     * @var \Monolog\Logger
+     * @var \Psr\Log\LoggerInterface
      */
     protected $logger;
 
@@ -38,11 +38,11 @@ abstract class AbstractBot
      * AbstractBot constructor.
      *
      * @param \App\Game\Game $game
-     * @param \Monolog\Logger $logger
+     * @param \Psr\Log\LoggerInterface $logger
      */
     public function __construct(
         Game $game,
-        Logger $logger
+        LoggerInterface $logger
     ) {
         $this->gameClient = $game;
         $this->logger = $logger;
@@ -70,6 +70,7 @@ abstract class AbstractBot
             }
         } catch (\Exception $e) {
             // @TODO : return end game message to console
+            var_dump($e);
         }
     }
 

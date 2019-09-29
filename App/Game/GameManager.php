@@ -11,10 +11,16 @@ use App\Game\Bot\MyBot;
  */
 class GameManager
 {
+    private $bot;
+
+    public function __construct(MyBot $bot)
+    {
+        $this->bot = $bot;
+    }
+
     public function runGame()
     {
-        $bot = new MyBot();
-        $bot->activation();
+        $this->bot->activation();
     }
 
 }
