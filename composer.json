@@ -12,11 +12,11 @@
     },
     "autoload": {
         "psr-4": {
-            "Src\\": "src/"
+            "App\\": "App/"
         }
     },
     "scripts": {
-        "post-root-package-install": [
+        "post-install-cmd": [
             "php -r \"file_exists('.env') || copy('.env-sample', '.env');\""
         ]
     }
