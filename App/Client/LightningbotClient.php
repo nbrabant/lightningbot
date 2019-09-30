@@ -20,8 +20,6 @@ class LightningbotClient
     const API_URL = 'API_URL';
     const API_TEST_URL = 'API_TEST_URL';
 
-    const CALL_METHOD = 'GET';
-
     private $httpClient;
 
     private $mode;
@@ -102,8 +100,7 @@ class LightningbotClient
      */
     private function call(string $url, array $options = null)
     {
-        return $this->httpClient
-             ->request(self::CALL_METHOD, $url, $options);
+        return $this->httpClient->get($url, $options);
     }
 
 }

@@ -5,8 +5,7 @@ require __DIR__ . '/../../vendor/autoload.php';
 use \Dotenv\Dotenv;
 use \DI\ContainerBuilder;
 
-$dotenv = new DotEnv(__DIR__ . '/../../');
-$dotenv->load();
+DotEnv::create(__DIR__ . '/../../')->load();
 
 $builder = new ContainerBuilder();
 $builder->useAnnotations(false);

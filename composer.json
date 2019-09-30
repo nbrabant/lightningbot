@@ -5,7 +5,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "vlucas/phpdotenv": "^2.4",
+        "vlucas/phpdotenv": "^3.5",
         "guzzlehttp/guzzle": "~6.0",
         "monolog/monolog": "^1.25",
         "php-di/php-di": "^6.0"
