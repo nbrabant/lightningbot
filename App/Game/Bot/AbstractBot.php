@@ -2,6 +2,8 @@
 
 namespace App\Game\Bot;
 
+use Exception;
+use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
 use App\Game\Game;
 use App\Client\LightningbotClient;
@@ -54,24 +56,41 @@ abstract class AbstractBot
     public function activation()
     {
         try {
-            $this->gameClient->connect();
+            $this->connectBot();
 
             $this->getInfos();
 
             $turn = 1;
             while (true) {
+                print_r('current turn : ' . $turn . "\r\n");
+
                 $waitForNextTurn = $this->getDirections($turn);
 
                 $waitForNextTurn = $this->defineNextMove($turn, $waitForNextTurn);
+
+                print_r($waitForNextTurn / 1000 . 'seconds until next turn.' . "\r\n");
 
                 usleep($waitForNextTurn);
 
                 $turn++;
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // @TODO : return end game message to console
             print_r($e->getMessage());
         }
+    }
+
+    /**
+     * Connect bot to the current game
+     *
+     * @return void
+     * @throws GuzzleException
+     */
+    private function connectBot()
+    {
+        $connectionResponse = $this->gameClient->connect();
+
+        usleep($connectionResponse->getWait() * 1000);
     }
 
     /**
@@ -87,7 +106,7 @@ abstract class AbstractBot
         $this->receiveInformation($gameInfosResponse);
         $after = microtime(true);
 
-        $wait = $gameInfosResponse->getWait() - ($before - $after);
+        $wait = ($gameInfosResponse->getWait() * 1000) - ($before - $after);
 
         usleep($wait);
     }

@@ -47,9 +47,9 @@ class GameErrorHandler
             case self::REQUEST_PHASE_OVER:
                 throw new RequestPhaseOverException();
                 break;
-            case self::NOT_IN_PROGRESS:
-                throw new NotInProgressException();
-                break;
+//            case self::NOT_IN_PROGRESS:
+//                throw new NotInProgressException();
+//                break;
             case self::FULL_GAME:
                 throw new FullGameException();
                 break;
@@ -62,8 +62,8 @@ class GameErrorHandler
             case self::DEAD:
                 throw new YouAreDeadException();
                 break;
-            default:
-                throw new \Exception('Unknow...');
+//            default:
+//                throw new \Exception('Unknow...');
         }
     }
 }
