@@ -9,4 +9,7 @@ namespace App\Client\Exception;
  */
 class FullGameException extends \Exception
 {
+    protected $code = 100;
+
+    protected $message = 'The game is full, the 20 bots limit is reached.';
 }

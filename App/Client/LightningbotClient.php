@@ -2,12 +2,15 @@
 
 namespace App\Client;
 
+use App\Client\Response\AbstractResponse;
 use App\Client\Response\ConnectResponse;
 use App\Client\Response\ConnectTestResponse;
 use App\Client\Response\DirectionsResponse;
 use App\Client\Response\InfoResponse;
 use App\Client\Response\MoveResponse;
 use \GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class LightningbotClient
@@ -49,65 +52,64 @@ class LightningbotClient
 
         $this->token = getenv(self::TOKEN);
 
-        $this->uriBase = getenv(self::API_URL);
-
-        $this->uriBaseTest = getenv(self::API_TEST_URL);
+        $this->uriBase = ($this->mode == 'test') ? getenv(self::API_TEST_URL) : getenv(self::API_URL);
     }
 
     /**
-     * @return \App\Client\Response\AbstractResponse
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return AbstractResponse|ConnectResponse|ConnectTestResponse
+     * @throws GuzzleException
      */
     public function connect()
     {
         if ($this->mode === 'test') {
-            $response = ConnectTestResponse::forge($this->call($this->uriBaseTest, $this->pseudo));
-            // setToken
+            $response = ConnectTestResponse::forge($this->call($this->uriBase . 'connect', $this->pseudo));
+            $this->token = $response->getToken();
             return $response;
         }
 
-        return ConnectResponse::forge($this->call($this->uriBase, $this->token));
+        return ConnectResponse::forge($this->call($this->uriBase . 'connect', $this->token));
     }
 
     /**
-     * @return \App\Client\Response\InfoResponse
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @return AbstractResponse
+     * @throws GuzzleException
      */
-    public function getInfos()
+    public function infos()
     {
-        return InfoResponse::forge($this->call($this->uriBase, $this->token));
+        return InfoResponse::forge($this->call($this->uriBase . 'info', $this->token));
     }
 
     /**
+     * @param int $turn
+     *
      * @return \App\Client\Response\DirectionsResponse
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function directions(int $turn)
     {
-        return DirectionsResponse::forge($this->call($this->uriBase, $this->token, $turn));
+        return DirectionsResponse::forge($this->call($this->uriBase . 'directions', $this->token, $turn));
     }
 
     /**
+     * @param int $direction
+     * @param int $turn
+     *
      * @return \App\Client\Response\MoveResponse
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function move(int $direction, int $turn)
     {
-        return MoveResponse::forge($this->call($this->uriBase, $this->token, $direction, $turn));
+        return MoveResponse::forge($this->call($this->uriBase . 'move', $this->token, $direction, $turn));
     }
 
     /**
      * Call client REST API
      *
-     * @param $url
-     * @param array|null $options
-     *
-     * @return mixed|\Psr\Http\Message\ResponseInterface
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @param array $args
+     * @return mixed|ResponseInterface
      */
     private function call(...$args)
     {
-        //@TODO : exception handling
         return $this->httpClient->get(implode('/', $args), []);
     }
 

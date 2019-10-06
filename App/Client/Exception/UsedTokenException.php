@@ -9,4 +9,7 @@ namespace App\Client\Exception;
  */
 class UsedTokenException extends \Exception
 {
+    protected $code = 101;
+
+    protected $message = 'The token is already used in the game.';
 }

@@ -9,4 +9,7 @@ namespace App\Client\Exception;
  */
 class InvalidRequestException extends \Exception
 {
+    protected $code = 0;
+
+    protected $message = 'The request path is invalid.';
 }

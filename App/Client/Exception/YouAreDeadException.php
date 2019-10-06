@@ -9,4 +9,7 @@ namespace App\Client\Exception;
  */
 class YouAreDeadException extends \Exception
 {
+    protected $code = 201;
+
+    protected $message = 'Your bot is dead.';
 }

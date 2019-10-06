@@ -3,9 +3,11 @@
 namespace App\Game;
 
 use App\Client\LightningbotClient;
+use App\Client\Response\AbstractResponse;
 use App\Client\Response\DirectionsResponse;
 use App\Client\Response\InfoResponse;
 use App\Client\Response\MoveResponse;
+use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * Class Game
@@ -34,24 +36,27 @@ class Game
         $this->env = getenv('GAME_MODE', '');
     }
 
+    /**
+     * @return AbstractResponse
+     * @throws GuzzleException
+     */
     public function connect()
     {
         return $this->lightningbotClient->connect();
-        return $this->lightningbotClient->connectTest();
     }
 
     public function getInfos() : InfoResponse
     {
-        return $this->lightningbotClient->info();
+        return $this->lightningbotClient->infos();
     }
 
     public function direction(int $turn) : DirectionsResponse
     {
-        return $this->lightningbotClient->directions();
+        return $this->lightningbotClient->directions($turn);
     }
 
     public function move(int $direction, int $turn) : MoveResponse
     {
-        return $this->lightningbotClient->move();
+        return $this->lightningbotClient->move($direction, $turn);
     }
 }

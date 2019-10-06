@@ -2,6 +2,9 @@
 
 namespace App\Client\Response;
 
+use GuzzleHttp\Psr7\Response;
+use stdClass;
+
 /**
  * Class AbstractResponse
  *
@@ -22,13 +25,19 @@ class AbstractResponse
     /**
      * Forge request object from request body
      *
-     * @param array $responseBody
-     *
+     * @param Response $response
      * @return \App\Client\Response\AbstractResponse
      */
-    public static function forge(array $responseBody)
+    public static function forge(Response $response)
     {
-        $instance = new self();
+        $instance = new static();
+
+        $responseBody = json_decode($response->getBody());
+
+        if (isset($responseBody->error)) {
+            trigger_error($responseBody->error, E_USER_ERROR);
+        }
+
         return $instance->parseResponse($responseBody);
     }
 
@@ -67,17 +76,16 @@ class AbstractResponse
     /**
      * Parse response to the herited request object
      *
-     * @param array $responseBody
+     * @param stdClass $responseBody
      *
      * @return \App\Client\Response\AbstractResponse
      */
-    private function parseResponse(array $responseBody)
+    private function parseResponse(stdClass $responseBody)
     {
         $properties = get_object_vars($this);
-
-        foreach ($properties as $property) {
-            if (isset($responseBody[$property])) {
-                $this->{'set' . ucfirst($property)}($responseBody[$property]);
+        foreach ($properties as $property => $value) {
+            if (isset($responseBody->{$property})) {
+                $this->{'set' . ucfirst($property)}($responseBody->{$property});
             }
         }
 

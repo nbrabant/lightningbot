@@ -9,4 +9,7 @@ namespace App\Client\Exception;
  */
 class InvalidParameterException extends \Exception
 {
+    protected $code = 1;
+
+    protected $message = 'A parameter is invalid.';
 }

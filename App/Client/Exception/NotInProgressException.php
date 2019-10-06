@@ -9,4 +9,7 @@ namespace App\Client\Exception;
  */
 class NotInProgressException extends \Exception
 {
+    protected $code = 3;
+
+    protected $message = 'The requested phase is not yet in progress.';
 }

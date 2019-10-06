@@ -70,7 +70,7 @@ abstract class AbstractBot
             }
         } catch (\Exception $e) {
             // @TODO : return end game message to console
-            var_dump($e);
+            print_r($e->getMessage());
         }
     }
 
@@ -83,9 +83,9 @@ abstract class AbstractBot
     {
         $gameInfosResponse = $this->gameClient->getInfos();
 
-        $before = microtime();
+        $before = microtime(true);
         $this->receiveInformation($gameInfosResponse);
-        $after = microtime();
+        $after = microtime(true);
 
         $wait = $gameInfosResponse->getWait() - ($before - $after);
 
@@ -115,7 +115,7 @@ abstract class AbstractBot
      */
     private function defineNextMove(int $turn, int $waitForNextTurn)
     {
-        $direction = $this->choseDirection($turn, $waitForNextTurn);
+        $direction = $this->chooseDirection($turn, $waitForNextTurn);
         $moveResponse = $this->gameClient->move($direction, $turn);
         return $moveResponse->getWait();
     }

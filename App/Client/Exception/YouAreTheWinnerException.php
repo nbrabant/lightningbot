@@ -9,4 +9,7 @@ namespace App\Client\Exception;
  */
 class YouAreTheWinnerException extends \Exception
 {
+    protected $code = 200;
+
+    protected $message = 'You are the winner!';
 }

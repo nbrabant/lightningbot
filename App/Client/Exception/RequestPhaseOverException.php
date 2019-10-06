@@ -9,4 +9,7 @@ namespace App\Client\Exception;
  */
 class RequestPhaseOverException extends \Exception
 {
+    protected $code = 2;
+
+    protected $message = 'The requested phase is over.';
 }

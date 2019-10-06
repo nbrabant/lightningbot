@@ -51,5 +51,6 @@ class MyBot extends AbstractBot
     protected function chooseDirection(int $turn, $waitForNextTurn): int
     {
         // TODO: Implement chooseDirection() method.
+        return self::MOVE_RIGHT;
     }
 }
