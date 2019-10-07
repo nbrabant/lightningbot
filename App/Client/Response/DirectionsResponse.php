@@ -32,12 +32,12 @@ class DirectionsResponse extends AbstractResponse
     }
 
     /**
-     * @param array $directions
+     * @param array $directions array of stdClass
      */
     public function setDirections(array $directions): void
     {
         foreach ($directions as $direction) {
-            $this->directions[] = new Direction($direction['pseudo'], $direction['direction']);
+            $this->directions[] = new Direction($direction->pseudo, $direction->direction);
         }
     }
 }

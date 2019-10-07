@@ -56,7 +56,7 @@ abstract class AbstractBot
     public function activation()
     {
         try {
-            $this->connectBot();
+            $this->gameClient->connect();
 
             $this->getInfos();
 
@@ -70,7 +70,7 @@ abstract class AbstractBot
 
                 print_r($waitForNextTurn / 1000 . 'seconds until next turn.' . "\r\n");
 
-                usleep($waitForNextTurn);
+                usleep($waitForNextTurn * 1000);
 
                 $turn++;
             }
@@ -78,19 +78,6 @@ abstract class AbstractBot
             // @TODO : return end game message to console
             print_r($e->getMessage());
         }
-    }
-
-    /**
-     * Connect bot to the current game
-     *
-     * @return void
-     * @throws GuzzleException
-     */
-    private function connectBot()
-    {
-        $connectionResponse = $this->gameClient->connect();
-
-        usleep($connectionResponse->getWait() * 1000);
     }
 
     /**

@@ -74,12 +74,12 @@ class InfoResponse extends AbstractResponse
     }
 
     /**
-     * @param array $positions
+     * @param array $positions array of stdClass
      */
     public function setPositions(array $positions): void
     {
         foreach ($positions as $position) {
-            $this->positions[] = new Position($position['pseudo'], $position['x'], $position['y']);
+            $this->positions[] = new Position($position->pseudo, $position->x, $position->y);
         }
     }
 }

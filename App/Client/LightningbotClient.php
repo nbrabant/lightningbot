@@ -35,8 +35,6 @@ class LightningbotClient
 
     private $uriBase;
 
-    private $uriBaseTest;
-
     /**
      * LightningbotClient constructor.
      *
@@ -48,28 +46,30 @@ class LightningbotClient
 
         $this->mode = getenv(self::GAME_MODE);
 
-        $this->pseudo = getenv(self::PSEUDO);
+        $this->pseudo = getenv(self::PSEUDO) . rand(1, 100);
 
         $this->token = getenv(self::TOKEN);
 
-        $this->uriBase = getenv(self::API_URL);
-
-        $this->uriBaseTest = getenv(self::API_TEST_URL);
+        $this->uriBase = ($this->mode == 'test') ? getenv(self::API_TEST_URL) : getenv(self::API_URL);
     }
 
     /**
-     * @return AbstractResponse|ConnectResponse|ConnectTestResponse
      * @throws GuzzleException
      */
     public function connect()
     {
         if ($this->mode === 'test') {
-            $response = ConnectTestResponse::forge($this->call($this->uriBaseTest . 'connect', $this->pseudo));
+            $response = ConnectTestResponse::forge($this->call($this->uriBase . 'connect', $this->pseudo));
             $this->token = $response->getToken();
-            return $response;
+        } else {
+            $response = ConnectResponse::forge($this->call($this->uriBase . 'connect', $this->token));
+            $this->pseudo = $response->getPseudo();
         }
 
-        return ConnectResponse::forge($this->call($this->uriBase . 'connect', $this->token));
+        print_r($this->pseudo . ' est connecté avec le token ' . $this->token . "\r\n");
+        print_r('La partie commence dans ' . ($response->getWait() / 1000) . ' secondes' . "\r\n");
+
+        usleep($response->getWait() * 1000);
     }
 
     /**

@@ -37,12 +37,11 @@ class Game
     }
 
     /**
-     * @return AbstractResponse
      * @throws GuzzleException
      */
     public function connect()
     {
-        return $this->lightningbotClient->connect();
+        $this->lightningbotClient->connect();
     }
 
     public function getInfos() : InfoResponse
