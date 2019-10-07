@@ -30,7 +30,7 @@ class LightningbotClient
     private $mode;
 
     private $pseudo;
-    
+
     private $token;
 
     private $uriBase;
@@ -52,7 +52,9 @@ class LightningbotClient
 
         $this->token = getenv(self::TOKEN);
 
-        $this->uriBase = ($this->mode == 'test') ? getenv(self::API_TEST_URL) : getenv(self::API_URL);
+        $this->uriBase = getenv(self::API_URL);
+
+        $this->uriBaseTest = getenv(self::API_TEST_URL);
     }
 
     /**
@@ -62,7 +64,7 @@ class LightningbotClient
     public function connect()
     {
         if ($this->mode === 'test') {
-            $response = ConnectTestResponse::forge($this->call($this->uriBase . 'connect', $this->pseudo));
+            $response = ConnectTestResponse::forge($this->call($this->uriBaseTest . 'connect', $this->pseudo));
             $this->token = $response->getToken();
             return $response;
         }
