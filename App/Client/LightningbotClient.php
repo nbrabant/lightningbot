@@ -46,7 +46,7 @@ class LightningbotClient
 
         $this->mode = getenv(self::GAME_MODE);
 
-        $this->pseudo = getenv(self::PSEUDO) . rand(1, 100);
+        $this->pseudo = getenv(self::PSEUDO);
 
         $this->token = getenv(self::TOKEN);
 

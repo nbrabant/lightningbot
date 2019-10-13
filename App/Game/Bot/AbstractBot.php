@@ -3,10 +3,8 @@
 namespace App\Game\Bot;
 
 use Exception;
-use GuzzleHttp\Exception\GuzzleException;
 use Psr\Log\LoggerInterface;
 use App\Game\Game;
-use App\Client\LightningbotClient;
 use App\Client\Response\DirectionsResponse;
 use App\Client\Response\InfoResponse;
 
