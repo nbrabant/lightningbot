@@ -35,7 +35,7 @@ class GameErrorHandler
      *
      * @throws \Exception
      */
-    public function handleError($errno, $errstr, $errfile = null, $errline = null)
+    public static function handleError($errno, $errstr, $errfile = null, $errline = null)
     {
         switch ($errstr) {
             case self::INVALID_REQUEST:
