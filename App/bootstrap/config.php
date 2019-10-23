@@ -9,10 +9,11 @@ use Monolog\Logger;
 use GuzzleHttp\Client;
 
 return [
-    Client::class => create(Client::class),
+    Client::class => create(Client::class)
+        ->constructor(['verify' => false]),
     LoggerInterface::class => create(Logger::class)
         ->constructor('debug'),
-    
+
     LightningbotClient::class => create(LightningbotClient::class)
         ->constructor(\DI\get(Client::class)),
 
