@@ -11,6 +11,7 @@ use App\Client\Response\MoveResponse;
 use \GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerInterface;
 
 /**
  * Class LightningbotClient
@@ -34,13 +35,17 @@ class LightningbotClient
     private $token;
 
     private $uriBase;
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
 
     /**
      * LightningbotClient constructor.
      *
      * @param \GuzzleHttp\Client $httpClient
      */
-    public function __construct(Client $httpClient)
+    public function __construct(Client $httpClient, LoggerInterface $logger)
     {
         $this->httpClient = $httpClient;
 
@@ -51,6 +56,8 @@ class LightningbotClient
         $this->token = getenv(self::TOKEN);
 
         $this->uriBase = ($this->mode == 'test') ? getenv(self::API_TEST_URL) : getenv(self::API_URL);
+
+        $this->logger = $logger;
     }
 
     /**
@@ -66,8 +73,8 @@ class LightningbotClient
             $this->pseudo = $response->getPseudo();
         }
 
-        print_r($this->pseudo . ' est connecté avec le token ' . $this->token . "\r\n");
-        print_r('La partie commence dans ' . ($response->getWait() / 1000) . ' secondes' . "\r\n");
+        $this->logger->info($this->pseudo . ' est connecté avec le token ' . $this->token);
+        $this->logger->info('La partie commence dans ' . ($response->getWait() / 1000) . ' secondes');
 
         usleep($response->getWait() * 1000);
     }

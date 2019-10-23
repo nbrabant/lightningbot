@@ -60,21 +60,20 @@ abstract class AbstractBot
 
             $turn = 1;
             while (true) {
-                print_r('current turn : ' . $turn . "\r\n");
+                $this->logger->info('current turn : ' . $turn);
 
                 $waitForNextTurn = $this->getDirections($turn);
 
                 $waitForNextTurn = $this->defineNextMove($turn, $waitForNextTurn);
 
-                print_r($waitForNextTurn / 1000 . 'seconds until next turn.' . "\r\n");
+                $this->logger->info($waitForNextTurn / 1000 . 'seconds until next turn.');
 
                 usleep($waitForNextTurn * 1000);
 
                 $turn++;
             }
         } catch (Exception $e) {
-            // @TODO : return end game message to console
-            print_r($e->getMessage());
+            $this->logger->error($e->getMessage(), $e->getTrace());
         }
     }
 
