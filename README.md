@@ -2,8 +2,8 @@
 
 ## C'est quoi LightningBot ? 
   
-LightningBot est un jeu au tour par tour. C'est à dire que passé la phase d'initialisation,  les joueurs ont un temps  
-limité pour donner leur action du tour. Puis le jeu calcul le résultat et commence le tour suivant.  
+LightningBot est un jeu au tour par tour. C'est à dire que passé la phase d'initialisation, les joueurs ont un temps  
+limité pour donner leur action du tour. Puis le jeu calcule le résultat et commence le tour suivant.  
   
 Le but du jeu est simple : être le dernier bot vivant. Pour cela, chaque joueur contrôle son bot via une API.  
   
@@ -41,11 +41,23 @@ Chaque méthode à implémenter est commenté dans la classe "MyBot", mais je co
 
 ## Installation
 
-Après avoir cloné le dépôt git sur votre poste, il faudra installer les dépendances composer
+Après avoir cloné le projet sur votre poste, vous aurez à récupérer les librairies tierces via le manager de dépendances composer
 
-Le fichier .env contient la configuration utilisée afin d'établir la connexion avec l'API
+Pour cela, executez la commande suivante dans un terminal :
 
-Afin de démarrer votre bot, il faudra exécuter le script game.php
+```shell
+composer install
+```
+
+Une fois la récupération de dépendances terminées, votre fichier d'environnement .env vous permettra de définir les variables d'environnement de votre executable :
+
+- API_URL : l'url du webservice en mode battle qui vous permettra de défier les autres bots une fois l'heure venue
+- API_TEST_URL : l'url du webservice qui vous permettra de tester votre bot
+- GAME_MODE : défini à "test" pour les phases de test
+- PSEUDO : Le pseudo de votre bot (uniquement réservé au mode test)
+- TOKEN : votre token Discord (uniquement réservé au mode battle)
+  
+L'exécution du script game.php permet d'activer un bot en fonction de l'environnement défini et, au besoin, créée une nouvelle partie.
 
 ## Liens
 * Documentation [Lighting bot](https://webcache.googleusercontent.com/search?q=cache:e8hSEBRZeQAJ:https://lightningbot.tk/doc+&cd=1&hl=fr&ct=clnk&gl=fr)

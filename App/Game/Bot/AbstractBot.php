@@ -2,7 +2,7 @@
 
 namespace App\Game\Bot;
 
-use Exception;
+use App\Client\Exception\YouAreTheWinnerException;
 use Psr\Log\LoggerInterface;
 use App\Game\Game;
 use App\Client\Response\DirectionsResponse;
@@ -72,7 +72,9 @@ abstract class AbstractBot
 
                 $turn++;
             }
-        } catch (Exception $e) {
+        } catch (YouAreTheWinnerException $e) {
+            $this->logger->info($e->getMessage());
+        } catch (\Exception $e) {
             $this->logger->error($e->getMessage(), $e->getTrace());
         }
     }
